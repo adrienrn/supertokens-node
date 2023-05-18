@@ -20,6 +20,7 @@ import {
 } from '@loopback/rest';
 import {Team} from '../models';
 import {TeamRepository} from '../repositories';
+import {authorize} from '@loopback/authorization';
 
 @authenticate('supertokens')
 export class TeamController {
@@ -28,6 +29,7 @@ export class TeamController {
     public teamRepository: TeamRepository,
   ) {}
 
+  @authorize({allowedRoles: ['ADMIN', 'MANAGER']})
   @post('/teams')
   @response(200, {
     description: 'Team model instance',
@@ -49,6 +51,7 @@ export class TeamController {
     return this.teamRepository.create(team);
   }
 
+  @authorize({allowedRoles: ['ADMIN']})
   @get('/teams/count')
   @response(200, {
     description: 'Team model count',
@@ -58,6 +61,7 @@ export class TeamController {
     return this.teamRepository.count(where);
   }
 
+  @authorize({allowedRoles: ['ADMIN']})
   @get('/teams')
   @response(200, {
     description: 'Array of Team model instances',
@@ -72,25 +76,6 @@ export class TeamController {
   })
   async find(@param.filter(Team) filter?: Filter<Team>): Promise<Team[]> {
     return this.teamRepository.find(filter);
-  }
-
-  @patch('/teams')
-  @response(200, {
-    description: 'Team PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Team, {partial: true}),
-        },
-      },
-    })
-    team: Team,
-    @param.where(Team) where?: Where<Team>,
-  ): Promise<Count> {
-    return this.teamRepository.updateAll(team, where);
   }
 
   @get('/teams/{id}')
@@ -109,6 +94,7 @@ export class TeamController {
     return this.teamRepository.findById(id, filter);
   }
 
+  @authorize({allowedRoles: ['ADMIN', 'MANAGER']})
   @patch('/teams/{id}')
   @response(204, {
     description: 'Team PATCH success',
@@ -127,6 +113,7 @@ export class TeamController {
     await this.teamRepository.updateById(id, team);
   }
 
+  @authorize({allowedRoles: ['ADMIN', 'MANAGER']})
   @put('/teams/{id}')
   @response(204, {
     description: 'Team PUT success',
@@ -138,6 +125,7 @@ export class TeamController {
     await this.teamRepository.replaceById(id, team);
   }
 
+  @authorize({allowedRoles: ['ADMIN']})
   @del('/teams/{id}')
   @response(204, {
     description: 'Team DELETE success',
