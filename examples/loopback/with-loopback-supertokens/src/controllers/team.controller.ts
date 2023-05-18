@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -7,19 +8,20 @@ import {
   Where,
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
   response,
 } from '@loopback/rest';
 import {Team} from '../models';
 import {TeamRepository} from '../repositories';
 
+@authenticate('supertokens')
 export class TeamController {
   constructor(
     @repository(TeamRepository)

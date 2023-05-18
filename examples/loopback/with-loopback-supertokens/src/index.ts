@@ -1,4 +1,6 @@
+import supertokens from 'supertokens-node';
 import {ApplicationConfig, ExampleApp} from './application';
+import {configureSupertokens} from './supertokens.config';
 
 export * from './application';
 
@@ -15,9 +17,16 @@ export async function main(options: ApplicationConfig = {}) {
 }
 
 if (require.main === module) {
+  configureSupertokens();
+
   // Run the application
   const config = {
     rest: {
+      cors: {
+        allowedHeaders: ['Content-Type', ...supertokens.getAllCORSHeaders()],
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
       port: +(process.env.PORT ?? 3000),
       host: process.env.HOST,
       // The `gracePeriodForClose` provides a graceful close for http/https

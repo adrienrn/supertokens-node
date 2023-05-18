@@ -1,0 +1,10 @@
+{
+  "ids": {
+    "Team": 2
+  },
+  "models": {
+    "Team": {
+      "1": "{\"name\":\"Wooly Mammoths\",\"id\":1}"
+    }
+  }
+}

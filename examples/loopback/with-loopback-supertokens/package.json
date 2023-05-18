@@ -49,12 +49,16 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^9.0.10",
+    "@loopback/authorization": "^0.12.10",
     "@loopback/boot": "^5.0.10",
     "@loopback/core": "^4.0.10",
     "@loopback/repository": "^5.1.5",
     "@loopback/rest": "^12.0.10",
     "@loopback/rest-explorer": "^5.0.10",
     "@loopback/service-proxy": "^5.0.10",
+    "loopback-supertokens": "^1.1.0",
+    "supertokens-node": "^13.6.0",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

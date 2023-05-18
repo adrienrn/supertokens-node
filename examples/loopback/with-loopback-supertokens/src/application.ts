@@ -1,3 +1,9 @@
+import {AuthenticationComponent} from '@loopback/authentication';
+import {
+  AuthorizationBindings,
+  AuthorizationComponent,
+  AuthorizationDecision,
+} from '@loopback/authorization';
 import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {RepositoryMixin} from '@loopback/repository';
@@ -7,6 +13,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
+import {SupertokensComponent} from 'loopback-supertokens';
 import path from 'path';
 import {MemoryDataSource} from './datasources';
 import {MySequence} from './sequence';
@@ -30,6 +37,15 @@ export class ExampleApp extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+
+    // Authentication:
+    this.component(AuthenticationComponent);
+    this.configure(AuthorizationBindings.COMPONENT).to({
+      defaultDecision: AuthorizationDecision.DENY,
+      precedence: AuthorizationDecision.ALLOW,
+    });
+    this.component(AuthorizationComponent);
+    this.component(SupertokensComponent);
 
     this.dataSource(MemoryDataSource);
 
