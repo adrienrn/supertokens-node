@@ -13,7 +13,10 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {ServiceMixin} from '@loopback/service-proxy';
-import {SupertokensComponent} from 'loopback-supertokens';
+import {
+  LoopbackSupertokensBindings,
+  SupertokensComponent,
+} from 'loopback-supertokens';
 import path from 'path';
 import {MemoryDataSource} from './datasources';
 import {MySequence} from './sequence';
@@ -59,5 +62,13 @@ export class ExampleApp extends BootMixin(
         nested: true,
       },
     };
+  }
+
+  async boot(): Promise<void> {
+    await super.boot();
+
+    this.bind(LoopbackSupertokensBindings.WEBHOOK_SIGNATURE_SECRET).to(
+      'webhook_signature_secret_key',
+    );
   }
 }
