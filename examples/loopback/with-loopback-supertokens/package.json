@@ -56,6 +56,7 @@
     "@loopback/repository": "^5.1.5",
     "@loopback/rest": "^12.0.10",
     "@loopback/rest-explorer": "^5.0.10",
+    "@loopback/security": "^0.8.10",
     "@loopback/service-proxy": "^5.0.10",
     "loopback-supertokens": "^1.1.0",
     "supertokens-node": "^13.6.0",
