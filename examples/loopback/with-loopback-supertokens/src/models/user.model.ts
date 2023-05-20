@@ -10,6 +10,10 @@ export class User extends Entity {
   })
   id: string;
 
+  @property({
+    type: 'number',
+  })
+  teamId?: number;
 
   constructor(data?: Partial<User>) {
     super(data);
